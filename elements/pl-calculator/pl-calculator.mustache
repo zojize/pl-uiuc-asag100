@@ -26,220 +26,153 @@ $(async function() {
     id="calculator-output-copy" 
     type="button" 
     class="btn btn-secondary copy" 
-    data-toggle="tooltip" 
-    data-placement="right"
-    data-delay=300
+    data-bs-toggle="tooltip" 
+    data-bs-placement="right"
+    data-bs-delay=300
     title="Copy this output">
     <i class="fa-solid fa-copy"></i>
   </button>
 </div>
 
 
-<div style="background-color: rgb(237, 237, 237); padding: 10px;">
-  <div class="container" style="margin-bottom: 10px;">
-    <div class="row justify-content-md-center">
-      <div class="col-md-auto">
-        <div class="btn-group" role="group" aria-label="Calculator keyboard subgroup panel">
-          <input type="radio" class="btn-check" name="btnradio" id="main-btn" autocomplete="off" onclick="showPanel('main')" checked>
-          <label class="btn btn-outline-secondary" for="main-btn">main</label>
+<div class="calculator-main bg-body-secondary p-2">
+  <div class="calculator-controls">
+    <div class="btn-group btn-group-sm" role="group" aria-label="Calculator keyboard subgroup panel">
+      <input type="radio" class="btn-check" name="btnradio" id="main-btn" autocomplete="off" onclick="showPanel('main')" checked>
+      <label class="btn btn-outline-secondary" for="main-btn">main</label>
 
-          <input type="radio" class="btn-check" name="btnradio" id="abc-btn" autocomplete="off" onclick="showPanel('abc')">
-          <label class="btn btn-outline-secondary" for="abc-btn">abc</label>
+      <input type="radio" class="btn-check" name="btnradio" id="abc-btn" autocomplete="off" onclick="showPanel('abc')">
+      <label class="btn btn-outline-secondary" for="abc-btn">abc</label>
 
-          <input type="radio" class="btn-check" name="btnradio" id="func-btn" autocomplete="off" onclick="showPanel('func')">
-          <label class="btn btn-outline-secondary" for="func-btn">func</label>
-        </div>
-      </div>
-      
-      <div class="col-md-auto">
-        <div class="form-check form-switch d-flex align-items-center" 
-          data-toggle="tooltip" 
-          data-placement="right"
-          data-delay=100
-          title="decimal value (0.5) or fractional expression (1/2)">
-          decimal
-          <input class="form-check-input mx-2" type="checkbox" id="displayModeSwitch">
-          fractional
-        </div>
+      <input type="radio" class="btn-check" name="btnradio" id="func-btn" autocomplete="off" onclick="showPanel('func')">
+      <label class="btn btn-outline-secondary" for="func-btn">func</label>
+    </div>
+    
+    <div class="calculator-toggles">
+      <div
+        class="form-check form-switch d-flex align-items-center"
+        data-bs-toggle="tooltip" 
+        data-bs-placement="bottom"
+        title="decimal (0.5) or fractional (1/2)">
+        <span class="toggle-label">dec</span>
+        <input class="form-check-input mx-1" type="checkbox" id="displayModeSwitch">
+        <span class="toggle-label">frac</span>
       </div>
 
-      <div class="col-md-auto">
-        <div class="form-check form-switch d-flex align-items-center"
-          data-toggle="tooltip" 
-          data-placement="right"
-          data-delay=100
-          title="radian or degree">
-          rad
-          <input class="form-check-input mx-2" type="checkbox" id="angleModeSwitch">
-          deg
-        </div>
-      </div>
-
-      <div class="col-md-auto">
-        <button name="clear" type="button" class="btn btn-light">clear all</button>
+      <div
+        class="form-check form-switch d-flex align-items-center"
+        data-bs-toggle="tooltip" 
+        data-bs-placement="bottom"
+        title="radian or degree">
+        <span class="toggle-label">rad</span>
+        <input class="form-check-input mx-1" type="checkbox" id="angleModeSwitch">
+        <span class="toggle-label">deg</span>
       </div>
     </div>
+
+    <button name="clear" type="button" class="btn btn-outline-danger btn-sm">clear</button>
   </div>
 
   <div id="main-keyboard" class="keyboard main">
-    <div id="main-row-1" class="d-flex">
-      <button name="sqr" type="button" class="btn btn-light button-length-1">$a^2$</button>
-      <button name="apowerb" type="button" class="btn btn-light button-length-1">$a^b$</button>
-      <button name="epowerx" type="button" class="btn btn-light button-length-1">$e^x$</button>
-      <button name="ln" type="button" class="btn btn-light button-length-1">$\ln$</button>
-      <div class="padding"></div>
-      <button id="7" type="button" class="btn btn-secondary button-length-1">7</button>
-      <button id="8" type="button" class="btn btn-secondary button-length-1">8</button>
-      <button id="9" type="button" class="btn btn-secondary button-length-1">9</button>
-      <button name="div" type="button" class="btn btn-light button-length-1">$\div$</button>
-      <div class="padding"></div>
-      <button name="perc" type="button" class="btn btn-light button-length-1">%</button>
-      <button name="frac" type="button" class="btn btn-light button-length-1">$\frac{a}{b}$</button>
+    <button type="button" class="col-nav col-nav-left"><i class="fa-solid fa-chevron-left"></i></button>
+    <div class="col-switchable">
+      <div class="col-functions d-flex flex-column">
+        <div class="d-flex"><button name="sqr" type="button" class="btn btn-light kb-btn">$a^2$</button><button name="apowerb" type="button" class="btn btn-light kb-btn">$a^b$</button><button name="epowerx" type="button" class="btn btn-light kb-btn">$e^x$</button><button name="ln" type="button" class="btn btn-light kb-btn">$\ln$</button></div>
+        <div class="d-flex"><button name="sqrt" type="button" class="btn btn-light kb-btn">$\sqrt{a}$</button><button name="root" type="button" class="btn btn-light kb-btn">$\sqrt[b]{a}$</button><button name="abs" type="button" class="btn btn-light kb-btn">$\left| a \right|$</button><button name="log" type="button" class="btn btn-light kb-btn">$\log_{a}{b}$</button></div>
+        <div class="d-flex"><button name="sin" type="button" class="btn btn-light kb-btn">$\sin$</button><button name="cos" type="button" class="btn btn-light kb-btn">$\cos$</button><button name="tan" type="button" class="btn btn-light kb-btn">$\tan$</button><button name="lg" type="button" class="btn btn-light kb-btn">$\log_{10}$</button></div>
+        <div class="d-flex"><button name="sin-1" type="button" class="btn btn-light kb-btn">$\sin^{-1}$</button><button name="cos-1" type="button" class="btn btn-light kb-btn">$\cos^{-1}$</button><button name="tan-1" type="button" class="btn btn-light kb-btn">$\tan^{-1}$</button><button name="pi" type="button" class="btn btn-light kb-btn">$\pi$</button></div>
+      </div>
+      <div class="col-numbers d-flex flex-column">
+        <div class="d-flex"><button id="7" type="button" class="btn btn-secondary kb-btn">7</button><button id="8" type="button" class="btn btn-secondary kb-btn">8</button><button id="9" type="button" class="btn btn-secondary kb-btn">9</button><button name="div" type="button" class="btn btn-light kb-btn">$\div$</button></div>
+        <div class="d-flex"><button id="4" type="button" class="btn btn-secondary kb-btn">4</button><button id="5" type="button" class="btn btn-secondary kb-btn">5</button><button id="6" type="button" class="btn btn-secondary kb-btn">6</button><button name="mul" type="button" class="btn btn-light kb-btn">$\times$</button></div>
+        <div class="d-flex"><button id="1" type="button" class="btn btn-secondary kb-btn">1</button><button id="2" type="button" class="btn btn-secondary kb-btn">2</button><button id="3" type="button" class="btn btn-secondary kb-btn">3</button><button name="minus" type="button" class="btn btn-light kb-btn">$-$</button></div>
+        <div class="d-flex"><button id="0" type="button" class="btn btn-secondary kb-btn">0</button><button name="dec-point" type="button" class="btn btn-secondary kb-btn">.</button><button name="ans" type="button" class="btn btn-light kb-btn">ans</button><button name="plus" type="button" class="btn btn-light kb-btn">$+$</button></div>
+      </div>
     </div>
-
-    <div id="main-row-2" class="d-flex">
-      <button name="sqrt" type="button" class="btn btn-light button-length-1">$\sqrt{a}$</button>
-      <button name="root" type="button" class="btn btn-light button-length-1">$\sqrt[b]{a}$</button>
-      <button name="abs" type="button" class="btn btn-light button-length-1">$\left| a \right|$</button>
-      <button name="log" type="button" class="btn btn-light button-length-1">$\log_{a}{b}$</button>
-      <div class="padding"></div>
-      <button id="4" type="button" class="btn btn-secondary button-length-1">4</button>
-      <button id="5" type="button" class="btn btn-secondary button-length-1">5</button>
-      <button id="6" type="button" class="btn btn-secondary button-length-1">6</button>
-      <button name="mul" type="button" class="btn btn-light button-length-1">$\times$</button>
-      <div class="padding"></div>
-      <button name="lpar" type="button" class="btn btn-light button-length-1">(</button>
-      <button name="rpar" type="button" class="btn btn-light button-length-1">)</button>
-    </div>
-
-    <div id="main-row-3" class="d-flex">
-      <button name="sin" type="button" class="btn btn-light button-length-1">$\sin$</button>
-      <button name="cos" type="button" class="btn btn-light button-length-1">$\cos$</button>
-      <button name="tan" type="button" class="btn btn-light button-length-1">$\tan$</button>
-      <button name="lg" type="button" class="btn btn-light button-length-1">$\log_{10}$</button>
-      <div class="padding"></div>
-      <button id="1" type="button" class="btn btn-secondary button-length-1">1</button>
-      <button id="2" type="button" class="btn btn-secondary button-length-1">2</button>
-      <button id="3" type="button" class="btn btn-secondary button-length-1">3</button>
-      <button name="minus" type="button" class="btn btn-light button-length-1">$-$</button>
-      <div class="padding"></div>
-      <button name="left" type="button" class="btn btn-light button-length-1"><i class="fa-solid fa-left-long"></i></button>
-      <button name="right" type="button" class="btn btn-light button-length-1"><i class="fa-solid fa-right-long"></i></button>
-    </div>
-
-    <div id="main-row-4" class="d-flex">
-      <button name="sin-1" type="button" class="btn btn-light button-length-1">$\sin^{-1}$</button>
-      <button name="cos-1" type="button" class="btn btn-light button-length-1">$\cos^{-1}$</button>
-      <button name="tan-1" type="button" class="btn btn-light button-length-1">$\tan^{-1}$</button>
-      <button name="pi" type="button" class="btn btn-light button-length-1">$\pi$</button>
-      <div class="padding"></div>
-      <button id="0" type="button" class="btn btn-secondary button-length-1">0</button>
-      <button name="dec-point" type="button" class="btn btn-secondary button-length-1">.</button>
-      <button name="ans" type="button" class="btn btn-light button-length-1">ans</button>
-      <button name="plus" type="button" class="btn btn-light button-length-1">$+$</button>
-      <div class="padding"></div>
-      <button name="backspace" type="button"class="btn btn-light button-length-1"><i class="fa-solid fa-delete-left"></i></button>
-      <button name="calculate" type="button" class="btn btn-success button-length-1"><i class="fa-solid fa-arrow-turn-up"></i></button>
+    <button type="button" class="col-nav col-nav-right"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="col-extras d-flex flex-column">
+      <div class="d-flex"><button name="perc" type="button" class="btn btn-light kb-btn">%</button><button name="frac" type="button" class="btn btn-light kb-btn">$\frac{a}{b}$</button></div>
+      <div class="d-flex"><button name="lpar" type="button" class="btn btn-light kb-btn">(</button><button name="rpar" type="button" class="btn btn-light kb-btn">)</button></div>
+      <div class="d-flex"><button name="left" type="button" class="btn btn-light kb-btn"><i class="fa-solid fa-left-long"></i></button><button name="right" type="button" class="btn btn-light kb-btn"><i class="fa-solid fa-right-long"></i></button></div>
+      <div class="d-flex"><button name="backspace" type="button" class="btn btn-light kb-btn"><i class="fa-solid fa-delete-left"></i></button><button name="calculate" type="button" class="btn btn-success kb-btn"><i class="fa-solid fa-arrow-turn-up"></i></button></div>
     </div>
   </div>
 
   <div id="abc-keyboard" class="keyboard abc">
-    <div id="abc-row-1" class="d-flex">
-      <button id="q" type="button" class="btn btn-light button-length-1">q</button>
-      <button id="w" type="button" class="btn btn-light button-length-1">w</button>
-      <button id="e" type="button" class="btn btn-light button-length-1">e</button>
-      <button id="r" type="button" class="btn btn-light button-length-1">r</button>
-      <button id="t" type="button" class="btn btn-light button-length-1">t</button>
-      <button id="y" type="button" class="btn btn-light button-length-1">y</button>
-      <button id="u" type="button" class="btn btn-light button-length-1">u</button>
-      <button id="i" type="button" class="btn btn-light button-length-1">i</button>
-      <button id="o" type="button" class="btn btn-light button-length-1">o</button>
-      <button id="p" type="button" class="btn btn-light button-length-1">p</button>
+    <div id="abc-row-1" class="d-flex justify-content-center">
+      <button id="q" type="button" class="btn btn-light abc-btn">q</button>
+      <button id="w" type="button" class="btn btn-light abc-btn">w</button>
+      <button id="e" type="button" class="btn btn-light abc-btn">e</button>
+      <button id="r" type="button" class="btn btn-light abc-btn">r</button>
+      <button id="t" type="button" class="btn btn-light abc-btn">t</button>
+      <button id="y" type="button" class="btn btn-light abc-btn">y</button>
+      <button id="u" type="button" class="btn btn-light abc-btn">u</button>
+      <button id="i" type="button" class="btn btn-light abc-btn">i</button>
+      <button id="o" type="button" class="btn btn-light abc-btn">o</button>
+      <button id="p" type="button" class="btn btn-light abc-btn">p</button>
     </div>
 
-    <div id="abc-row-2" class="d-flex">
-      <div class="padding"></div>
-      <button id="a" type="button" class="btn btn-light button-length-1">a</button>
-      <button id="s" type="button" class="btn btn-light button-length-1">s</button>
-      <button id="d" type="button" class="btn btn-light button-length-1">d</button>
-      <button id="f" type="button" class="btn btn-light button-length-1">f</button>
-      <button id="g" type="button" class="btn btn-light button-length-1">g</button>
-      <button id="h" type="button" class="btn btn-light button-length-1">h</button>
-      <button id="j" type="button" class="btn btn-light button-length-1">j</button>
-      <button id="k" type="button" class="btn btn-light button-length-1">k</button>
-      <button id="l" type="button" class="btn btn-light button-length-1">l</button>
+    <div id="abc-row-2" class="d-flex justify-content-center">
+      <button id="a" type="button" class="btn btn-light abc-btn">a</button>
+      <button id="s" type="button" class="btn btn-light abc-btn">s</button>
+      <button id="d" type="button" class="btn btn-light abc-btn">d</button>
+      <button id="f" type="button" class="btn btn-light abc-btn">f</button>
+      <button id="g" type="button" class="btn btn-light abc-btn">g</button>
+      <button id="h" type="button" class="btn btn-light abc-btn">h</button>
+      <button id="j" type="button" class="btn btn-light abc-btn">j</button>
+      <button id="k" type="button" class="btn btn-light abc-btn">k</button>
+      <button id="l" type="button" class="btn btn-light abc-btn">l</button>
     </div>
 
-    <div id="abc-row-3" class="d-flex">
-      <button name="eq" type="button" class="btn btn-light button-length-1">=</button>
-      <button id="z" type="button" class="btn btn-light button-length-1">z</button>
-      <button id="x" type="button" class="btn btn-light button-length-1">x</button>
-      <button id="c" type="button" class="btn btn-light button-length-1">c</button>
-      <button id="v" type="button" class="btn btn-light button-length-1">v</button>
-      <button id="b" type="button" class="btn btn-light button-length-1">b</button>
-      <button id="n" type="button" class="btn btn-light button-length-1">n</button>
-      <button id="m" type="button" class="btn btn-light button-length-1">m</button>
-      <button name="assign" type="button" class="btn btn-light button-length-1">$:=$</button>
-      <button name="backspace" type="button"class="btn btn-light button-length-1"><i class="fa-solid fa-delete-left"></i></button>
+    <div id="abc-row-3" class="d-flex justify-content-center">
+      <button name="eq" type="button" class="btn btn-light abc-btn">=</button>
+      <button id="z" type="button" class="btn btn-light abc-btn">z</button>
+      <button id="x" type="button" class="btn btn-light abc-btn">x</button>
+      <button id="c" type="button" class="btn btn-light abc-btn">c</button>
+      <button id="v" type="button" class="btn btn-light abc-btn">v</button>
+      <button id="b" type="button" class="btn btn-light abc-btn">b</button>
+      <button id="n" type="button" class="btn btn-light abc-btn">n</button>
+      <button id="m" type="button" class="btn btn-light abc-btn">m</button>
+      <button name="assign" type="button" class="btn btn-light abc-btn">$:=$</button>
+      <button name="backspace" type="button"class="btn btn-light abc-btn"><i class="fa-solid fa-delete-left"></i></button>
     </div>
 
-    <div id="abc-row-4" class="d-flex">
-      <button name="shift" type="button" class="btn btn-light button-length-2"><i class="fa-solid fa-arrow-up"></i></button>
-      <button name="lpar" type="button" class="btn btn-light button-length-1">(</button>
-      <button name="rpar" type="button" class="btn btn-light button-length-1">)</button>
-      <button name="lbra" type="button" class="btn btn-light button-length-1">[</button>
-      <button name="rbra" type="button" class="btn btn-light button-length-1">]</button>
-      <button name="factorial" type="button" class="btn btn-light button-length-1">$!$</button>
-      <button name="pi" type="button" class="btn btn-light button-length-1">$\pi$</button>
-      <button name="left" type="button" class="btn btn-light button-length-1"><i class="fa-solid fa-left-long"></i></button>
-      <button name="right" type="button" class="btn btn-light button-length-1"><i class="fa-solid fa-right-long"></i></button>
-      <button name="calculate" type="button" class="btn btn-success button-length-2"><i class="fa-solid fa-arrow-turn-up"></i></button>
+    <div id="abc-row-4" class="d-flex justify-content-center">
+      <button name="shift" type="button" class="btn btn-light abc-btn abc-btn-wide"><i class="fa-solid fa-arrow-up"></i></button>
+      <button name="lpar" type="button" class="btn btn-light abc-btn">(</button>
+      <button name="rpar" type="button" class="btn btn-light abc-btn">)</button>
+      <button name="lbra" type="button" class="btn btn-light abc-btn">[</button>
+      <button name="rbra" type="button" class="btn btn-light abc-btn">]</button>
+      <button name="factorial" type="button" class="btn btn-light abc-btn">$!$</button>
+      <button name="pi" type="button" class="btn btn-light abc-btn">$\pi$</button>
+      <button name="left" type="button" class="btn btn-light abc-btn"><i class="fa-solid fa-left-long"></i></button>
+      <button name="right" type="button" class="btn btn-light abc-btn"><i class="fa-solid fa-right-long"></i></button>
+      <button name="calculate" type="button" class="btn btn-success abc-btn abc-btn-wide"><i class="fa-solid fa-arrow-turn-up"></i></button>
     </div>
   </div>
 
   <div id="func-keyboard" class="keyboard func">
-    <div id="func-row-1" class="d-flex">
-      <button name="sin" type="button" class="btn btn-light button-length-2">$\sin$</button>
-      <button name="cos" type="button" class="btn btn-light button-length-2">$\cos$</button>
-      <button name="tan" type="button" class="btn btn-light button-length-2">$\tan$</button>
-      <div class="padding"></div>
-      <button name="apowerb" type="button" class="btn btn-light button-length-2">$a^b$</button>
-      <button name="sqrt" type="button" class="btn btn-light button-length-2">$\sqrt{a}$</button>
-      <button name="root" type="button" class="btn btn-light button-length-2">$\sqrt[b]{a}$</button>
+    <button type="button" class="col-nav col-nav-left"><i class="fa-solid fa-chevron-left"></i></button>
+    <div class="col-switchable">
+      <div class="col-trig d-flex flex-column">
+        <div class="d-flex"><button name="sin" type="button" class="btn btn-light kb-btn">$\sin$</button><button name="cos" type="button" class="btn btn-light kb-btn">$\cos$</button><button name="tan" type="button" class="btn btn-light kb-btn">$\tan$</button></div>
+        <div class="d-flex"><button name="sin-1" type="button" class="btn btn-light kb-btn">$\sin^{-1}$</button><button name="cos-1" type="button" class="btn btn-light kb-btn">$\cos^{-1}$</button><button name="tan-1" type="button" class="btn btn-light kb-btn">$\tan^{-1}$</button></div>
+        <div class="d-flex"><button name="sinh" type="button" class="btn btn-light kb-btn">$\sinh$</button><button name="cosh" type="button" class="btn btn-light kb-btn">$\cosh$</button><button name="tanh" type="button" class="btn btn-light kb-btn">$\tanh$</button></div>
+        <div class="d-flex"><button name="sinh-1" type="button" class="btn btn-light kb-btn">$\sinh^{-1}$</button><button name="cosh-1" type="button" class="btn btn-light kb-btn">$\cosh^{-1}$</button><button name="tanh-1" type="button" class="btn btn-light kb-btn">$\tanh^{-1}$</button></div>
+      </div>
+      <div class="col-math d-flex flex-column">
+        <div class="d-flex"><button name="apowerb" type="button" class="btn btn-light kb-btn">$a^b$</button><button name="sqrt" type="button" class="btn btn-light kb-btn">$\sqrt{a}$</button><button name="root" type="button" class="btn btn-light kb-btn">$\sqrt[b]{a}$</button></div>
+        <div class="d-flex"><button name="epowerx" type="button" class="btn btn-light kb-btn">$e^x$</button><button name="abs" type="button" class="btn btn-light kb-btn">$\left| a \right|$</button><button name="inv" type="button" class="btn btn-light kb-btn">$\frac{1}{x}$</button></div>
+        <div class="d-flex"><button name="log" type="button" class="btn btn-light kb-btn">$\log_{a}{b}$</button><button name="lg" type="button" class="btn btn-light kb-btn">$\log_{10}$</button><button name="ln" type="button" class="btn btn-light kb-btn">$\ln$</button></div>
+        <div class="d-flex"><button name="factorial" type="button" class="btn btn-light kb-btn">$!$</button><button name="pi" type="button" class="btn btn-light kb-btn">$\pi$</button><button name="ans" type="button" class="btn btn-light kb-btn">ans</button></div>
+      </div>
     </div>
-
-    <div id="func-row-2" class="d-flex">
-      <button name="sin-1" type="button" class="btn btn-light button-length-2">$\sin^{-1}$</button>
-      <button name="cos-1" type="button" class="btn btn-light button-length-2">$\cos^{-1}$</button>
-      <button name="tan-1" type="button" class="btn btn-light button-length-2">$\tan^{-1}$</button>
-      <div class="padding"></div>
-      <button name="epowerx" type="button" class="btn btn-light button-length-2">$e^x$</button>
-      <button name="abs" type="button" class="btn btn-light button-length-2">$\left| a \right|$</button>
-      <button name="inv" type="button" class="btn btn-light button-length-2">$\frac{1}{x}$</button>
-    </div>
-
-    <div id="func-row-3" class="d-flex">
-      <button name="sinh" type="button" class="btn btn-light button-length-2">$\sinh$</button>
-      <button name="cosh" type="button" class="btn btn-light button-length-2">$\cosh$</button>
-      <button name="tanh" type="button" class="btn btn-light button-length-2">$\tanh$</button>
-      <div class="padding"></div>
-      <button name="log" type="button" class="btn btn-light button-length-2">$\log_{a}{b}$</button>
-      <button name="lg" type="button" class="btn btn-light button-length-2">$\log_{10}$</button>
-      <button name="ln" type="button" class="btn btn-light button-length-2">$\ln$</button>
-      <div class="padding"></div>
-      <button name="backspace" type="button"class="btn btn-light button-length-2"><i class="fa-solid fa-delete-left"></i></button>
-    </div>
-
-    <div id="func-row-4" class="d-flex">
-      <button name="sinh-1" type="button" class="btn btn-light button-length-2">$\sinh^{-1}$</button>
-      <button name="cosh-1" type="button" class="btn btn-light button-length-2">$\cosh^{-1}$</button>
-      <button name="tanh-1" type="button" class="btn btn-light button-length-2">$\tanh^{-1}$</button>
-      <div class="padding"></div>
-      <button name="factorial" type="button" class="btn btn-light button-length-2">$!$</button>
-      <button name="pi" type="button" class="btn btn-light button-length-2">$\pi$</button>
-      <button name="ans" type="button" class="btn btn-light button-length-2">ans</button>
-      <div class="padding"></div>
-      <button name="calculate" type="button" class="btn btn-success button-length-2"><i class="fa-solid fa-arrow-turn-up"></i></button>
+    <button type="button" class="col-nav col-nav-right"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="col-action d-flex flex-column">
+      <div class="d-flex"></div>
+      <div class="d-flex"></div>
+      <div class="d-flex"><button name="backspace" type="button" class="btn btn-light kb-btn"><i class="fa-solid fa-delete-left"></i></button></div>
+      <div class="d-flex"><button name="calculate" type="button" class="btn btn-success kb-btn"><i class="fa-solid fa-arrow-turn-up"></i></button></div>
     </div>
   </div>
 </div>
