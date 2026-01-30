@@ -1,8 +1,12 @@
 // npm install --save @cortex-js/compute-engine
 // npm install --save mathlive
 
+/**
+ * @param {string} uuid 
+ * @param {*} options TODO
+ */
 window.PLCalculator = async function (uuid, options) {
-  var elementId = "#calculator-" + uuid;
+  const elementId = "#calculator-" + uuid;
   this.element = $(elementId);
   if (!this.element) {
     throw new Error("Calculator element " + elementId + " was not found!");
@@ -10,8 +14,10 @@ window.PLCalculator = async function (uuid, options) {
   showPanel("main");
   initColumnNavigation();
 
+  /** @type {typeof import("@cortex-js/compute-engine")} */
   const { ComputeEngine } = await import("compute-engine");
-  const { MathLive } = await import("mathlive");
+  /** @type {typeof import("mathlive")} */
+  const { MathLive } =  await import("mathlive");
   const ce = new ComputeEngine();
   ce.context.timeLimit = 1;
 
@@ -30,9 +36,10 @@ window.PLCalculator = async function (uuid, options) {
     })
   );
 
+  /** @type {number} */
   let typingTimer; // Timer identifier
   const delay = 500; // 0.5 second delay
-  calculatorInputElement.addEventListener("input", () => {
+  calculatorInputElement.addEventListener("input", (e) => {
     clearTimeout(typingTimer); // Clear the previous timer
     typingTimer = setTimeout(() => {
       calculate(false);
@@ -80,7 +87,13 @@ window.PLCalculator = async function (uuid, options) {
       };
       return;
     }
-    let parsed = ce.parse(input);
+    /** @type {import("@cortex-js/compute-engine").BoxedExpression} */
+    let parsed = ce.parse(
+      input,
+      {
+        parseNumbers: 'rational'
+      }
+    );
     if (calculatorOutput.dataset.angleMode === "deg") {
       parsed = ce.box(radianToDegree(parsed.json));
     }
@@ -91,6 +104,7 @@ window.PLCalculator = async function (uuid, options) {
         "Assignment operator can only be used on single-letter variables",
       ]);
     }
+    /** @type {import("@cortex-js/compute-engine").BoxedExpression} */
     let evaluated;
     try {
       evaluated = parsed.evaluate();
@@ -108,7 +122,7 @@ window.PLCalculator = async function (uuid, options) {
 
     let displayed = "";
     if (calculatorOutput.dataset.displayMode === "symbolic") {
-      displayed = evaluated.toLatex({ notation: "auto" });
+      displayed = evaluated.latex
     } else {
       displayed = evaluated.N().toLatex({ notation: "auto" });
     }
@@ -126,7 +140,6 @@ window.PLCalculator = async function (uuid, options) {
       if (parsed.json[0] === "Assign") {
         const varName = parsed.json[1];
         const varVal = ce.box(parsed.json[2]).evaluate();
-        console.log(`Assigning value ${varVal.toLatex({ notation: "auto" })} to variable ${varName}`);
         data.variable.push({ name: varName, value: varVal.toLatex({ notation: "auto" }) });
       }
       try {
@@ -557,6 +570,9 @@ window.PLCalculator = async function (uuid, options) {
   }
 };
 
+/**
+ * @param {string} panelClass
+ */
 function showPanel(panelClass) {
   // Hide all panels
   const panels = document.querySelectorAll(".keyboard");
@@ -565,8 +581,6 @@ function showPanel(panelClass) {
   // Show the selected panel
   const panelToShow = document.querySelectorAll(`.${panelClass}`);
   panelToShow.forEach((panel) => (panel.style.display = "flex"));
-
-  document.getElementById("calculator-input").focus();
 }
 
 // Column navigation for responsive keyboards
